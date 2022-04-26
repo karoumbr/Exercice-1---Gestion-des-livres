@@ -24,10 +24,29 @@ public class MainActivity extends AppCompatActivity {
         txtISBN = (EditText) findViewById(R.id.txtISBN);
         txtTitreLivre = (EditText) findViewById(R.id.txtTitreLivre);
         btnAjouterLivre = (Button) findViewById(R.id.btnAjouterLivre);
+
+
+        //Q1
+        bd = openOrCreateDatabase("BDLivres",Context.MODE_PRIVATE,null);
+        //Q2
+        bd.execSQL("CREATE TABLE IF NOT EXISTS livres (id integer primary key, ISBN VARCHAR,TITRE VARCHAR);");
+        //Q3
+        Cursor c=bd.rawQuery("SELECT * FROM Livres",null);
+        if(c.getCount()==0)
+        {
+            Toast.makeText(getApplicationContext(),"Table Vide",
+                    Toast.LENGTH_LONG).show();
+            //Q6
+            bd.execSQL("INSERT INTO Livres(id,isbn,titre) VALUES(1,'619-23654','Le langage C');");
+            bd.execSQL("INSERT INTO Livres(id,isbn,titre) VALUES(2,'235-78965','Systèmes Temps Réel');");
+
+            //   return;
+        }
+
         btnAjouterLivre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //Q7
+                //Q7
                 //récupérer le isbn de l’interface
                 String userISBN = "";
                 userISBN = txtISBN.getText().toString();
@@ -57,24 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        //Q1
-        bd = openOrCreateDatabase("BDLivres",Context.MODE_PRIVATE,null);
-        //Q2
-        bd.execSQL("CREATE TABLE IF NOT EXISTS livres (id integer primary key, ISBN VARCHAR,TITRE VARCHAR);");
-        //Q3
-        Cursor c=bd.rawQuery("SELECT * FROM Livres",null);
-        if(c.getCount()==0)
-        {
-            Toast.makeText(getApplicationContext(),"Table Vide",
-                    Toast.LENGTH_LONG).show();
-            //Q6
-            bd.execSQL("INSERT INTO Livres(id,isbn,titre) VALUES(1,'619-23654','Le langage C');");
-            bd.execSQL("INSERT INTO Livres(id,isbn,titre) VALUES(2,'235-78965','Systèmes Temps Réel');");
-
-            //   return;
-        }
-
     }
 
     //Q4
